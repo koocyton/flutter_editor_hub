@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class ResizeWidget extends StatefulWidget {
+class KeyboardEventWidget extends StatefulWidget {
 
   final Widget Function(double bottomMargin)? childBuild;
 
@@ -19,7 +19,7 @@ class ResizeWidget extends StatefulWidget {
 
   final Function(double bottomMargin)? onKbHiding;
 
-  const ResizeWidget({
+  const KeyboardEventWidget({
     // build child
     this.childBuild,
     this.child,
@@ -31,14 +31,14 @@ class ResizeWidget extends StatefulWidget {
     this.onKbHideBegin,
     this.onKbHiding,
     this.onKbHideEnd,
-    Key? key
-  }) : super(key: key);
+    super.key
+  });
 
   @override
-  State<ResizeWidget> createState() => ResizeWidgetState();
+  State<KeyboardEventWidget> createState() => KeyboardEventWidgetState();
 }
 
-class ResizeWidgetState extends State<ResizeWidget> with WidgetsBindingObserver {
+class KeyboardEventWidgetState extends State<KeyboardEventWidget> with WidgetsBindingObserver {
 
   double bottomMargin = 0;
 

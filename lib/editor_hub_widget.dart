@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
-import 'package:flutter_editor_hub/resize_widget.dart';
+import 'package:flutter_editor_hub/keyboard_event_widget.dart';
 
 class EditorHubWidget extends StatefulWidget {
 
   final EditorHubController? controller;
 
-  final Widget? navbarWidget;
+  final Widget? navbarChild;
 
-  final List<Widget>? optboardWidgets;
+  final List<Widget>? optboardChildren;
 
   const EditorHubWidget({
     this.controller,
-    this.navbarWidget,
-    this.optboardWidgets,
+    this.navbarChild,
+    this.optboardChildren,
     super.key
   });
 
   @override
-  EditorHubWidgetState createState() => EditorHubWidgetState();
+  State<EditorHubWidget> createState() => EditorHubWidgetState();
 
 }
 
@@ -36,7 +36,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ResizeWidget();
+    return const KeyboardEventWidget();
   }
 
 }

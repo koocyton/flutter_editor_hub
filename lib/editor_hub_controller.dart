@@ -1,5 +1,7 @@
 class EditorHubController {
 
+  const EditorHubController();
+
   void hideOptboard() {
   }
 
