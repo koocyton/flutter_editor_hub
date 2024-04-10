@@ -4,16 +4,19 @@ import 'package:flutter_editor_hub/keyboard_event_widget.dart';
 
 class EditorHubWidget extends StatefulWidget {
 
-  final EditorHubController? controller;
+  final EditorHubController controller;
 
-  final Widget? navbarChild;
+  final Widget editorChild;
 
-  final List<Widget>? optboardChildren;
+  final Widget navbarChild;
+
+  final List<Widget> oprationChilren;
 
   const EditorHubWidget({
-    this.controller,
-    this.navbarChild,
-    this.optboardChildren,
+    required this.controller,
+    required this.editorChild,
+    required this.navbarChild,
+    required this.oprationChilren,
     super.key
   });
 
@@ -24,6 +27,47 @@ class EditorHubWidget extends StatefulWidget {
 
 class EditorHubWidgetState extends State<EditorHubWidget> {
 
+  double bottomMargin = 0;
+
+  int bottomAnimatedMilliseconds = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyboardEventWidget(
+      onKbShowing: (bm){
+        setState(() {
+          bottomMargin = bm;
+        });
+      },
+      onKbHiding: (bm){
+        setState(() {
+          bottomMargin = bm;
+        });
+      },
+      child:Column(
+        children:[
+          Expanded(
+            child: widget.editorChild
+          ),
+          widget.navbarChild,
+          AnimatedContainer(
+            duration: Duration(milliseconds: bottomAnimatedMilliseconds),
+            height: bottomMargin,
+            child: IndexedStack(
+              alignment: Alignment.center,
+              index: 0,
+              children: widget.oprationChilren.map((e){
+                return SingleChildScrollView(
+                  child: e
+                );
+              }).toList()
+            )
+          )
+        ]
+      )
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -32,11 +76,6 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const KeyboardEventWidget();
   }
 
 }
