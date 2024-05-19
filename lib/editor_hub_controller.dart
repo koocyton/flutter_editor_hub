@@ -14,6 +14,13 @@ class EditorHubController {
     this.state = state;
   }
 
+  void hideOptboardAndKb(double bm) {
+    state.setState(() {
+      bottomAnimatedMilliseconds = 0;
+      bottomMargin = bm;
+    });
+  }
+
   void hideOptboard() {
     state.setState(() {
       bottomAnimatedMilliseconds = 200;
@@ -29,6 +36,10 @@ class EditorHubController {
     state.setState(() {
       bottomAnimatedMilliseconds = 200;
       bottomMargin = 322.00;
+      Future.delayed(const Duration(milliseconds: 200), (){
+        bottomAnimatedMilliseconds = 0;
+        bottomMargin = 322.00;
+      });
     });
   }
 
