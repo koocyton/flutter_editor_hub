@@ -16,7 +16,7 @@ class EditorDemoPage extends StatefulWidget {
 
 class EditorDemoPageState extends State<EditorDemoPage> {
 
-  final EditorHubController ehController = const EditorHubController();
+  final EditorHubController ehController = EditorHubController();
   late double viewWidth;
   late double viewHeight;
 
@@ -78,8 +78,12 @@ class EditorDemoPageState extends State<EditorDemoPage> {
       width: viewWidth,
       child: Row(
         children: [
-          navbarItem(iconData: Icons.face, onPressed: (){}),
-          navbarItem(iconData: Icons.face, onPressed: (){}),
+          navbarItem(iconData: Icons.face, onPressed: (){
+            ehController.hideOptboard();
+          }),
+          navbarItem(iconData: Icons.face, onPressed: (){
+            ehController.showOptboard(1);
+            }),
           navbarItem(iconData: Icons.face, onPressed: (){}),
           navbarItem(iconData: Icons.face, onPressed: (){})
         ],

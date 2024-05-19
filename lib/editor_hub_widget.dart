@@ -27,16 +27,12 @@ class EditorHubWidget extends StatefulWidget {
 
 class EditorHubWidgetState extends State<EditorHubWidget> {
 
-  double bottomMargin = 0;
-
-  int bottomAnimatedMilliseconds = 0;
-
   @override
   Widget build(BuildContext context) {
     return KeyboardEventWidget(
       onKbSliding: (bm){
         setState(() {
-          bottomMargin = bm;
+          widget.controller.bottomMargin = bm;
         });
       },
       child:Column(
@@ -46,8 +42,8 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
           ),
           widget.navbarChild,
           AnimatedContainer(
-            duration: Duration(milliseconds: bottomAnimatedMilliseconds),
-            height: bottomMargin,
+            duration: Duration(milliseconds: widget.controller.bottomAnimatedMilliseconds),
+            height: widget.controller.bottomMargin,
             child: IndexedStack(
               alignment: Alignment.center,
               index: 0,
@@ -71,6 +67,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   @override
   void initState() {
     super.initState();
+    widget.controller.setState(this);
   }
 
 }
