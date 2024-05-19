@@ -31,9 +31,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   Widget build(BuildContext context) {
     return KeyboardEventWidget(
       onKbSliding: (bm){
-        setState(() {
-          widget.controller.bottomMargin = bm;
-        });
+        widget.controller.kbSliding(bm);
       },
       child:Column(
         children:[
@@ -70,4 +68,10 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
     widget.controller.setState(this);
   }
 
+  @override
+  void setState(Function() fn) {
+    super.setState((){
+      fn();
+    });
+  }
 }
