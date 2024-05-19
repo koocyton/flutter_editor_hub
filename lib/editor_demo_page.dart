@@ -25,32 +25,26 @@ class EditorDemoPageState extends State<EditorDemoPage> {
     Size viewSize = MediaQueryData.fromView(View.of(context)).size;
     viewWidth  = viewSize.width;
     viewHeight = viewSize.height;
-    return Container(
-      color:Colors.white,
-      height: viewHeight,
-      width: viewWidth,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:[
-          Container(
-            color:Colors.black38,
-            height:45,
-            width: viewWidth,
-          ),
-          Expanded(
-            child:Container(
-              color:Colors.black12,
-              width: viewWidth,
-              child: EditorHubWidget(
-                controller: ehController,
-                editorChild: editor(),
-                navbarChild: navbar(),
-                oprationChilren: opreations(),
-              )
-            )
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:[
+        Container(
+          color:Colors.black38,
+          height:45,
+          width: viewWidth,
+        ),
+        Container(
+          color:Colors.white,
+          height: viewHeight - 45,
+          width: viewWidth,
+          child: EditorHubWidget(
+            controller: ehController,
+            editorChild: editor(),
+            navbarChild: navbar(),
+            oprationChilren: opreations(),
           )
-        ]
-      )
+        )
+      ]
     );
   }
 
@@ -82,16 +76,14 @@ class EditorDemoPageState extends State<EditorDemoPage> {
       color:Colors.green,
       height: 60,
       width: viewWidth,
-      child: Expanded(
-        child:Row(
-          children: [
-            navbarItem(iconData: Icons.face, onPressed: (){}),
-            navbarItem(iconData: Icons.face, onPressed: (){}),
-            navbarItem(iconData: Icons.face, onPressed: (){}),
-            navbarItem(iconData: Icons.face, onPressed: (){})
-          ],
-        ),
-      ),
+      child: Row(
+        children: [
+          navbarItem(iconData: Icons.face, onPressed: (){}),
+          navbarItem(iconData: Icons.face, onPressed: (){}),
+          navbarItem(iconData: Icons.face, onPressed: (){}),
+          navbarItem(iconData: Icons.face, onPressed: (){})
+        ],
+      )
     );
   }
 

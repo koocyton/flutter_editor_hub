@@ -34,12 +34,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   @override
   Widget build(BuildContext context) {
     return KeyboardEventWidget(
-      onKbShowing: (bm){
-        setState(() {
-          bottomMargin = bm;
-        });
-      },
-      onKbHiding: (bm){
+      onKbSliding: (bm){
         setState(() {
           bottomMargin = bm;
         });

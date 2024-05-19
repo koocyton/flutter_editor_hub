@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class KeyboardEventWidget extends StatefulWidget {
 
@@ -19,6 +19,8 @@ class KeyboardEventWidget extends StatefulWidget {
 
   final Function(double bottomMargin)? onKbHiding;
 
+  final Function(double bottomMargin)? onKbSliding;
+
   const KeyboardEventWidget({
     // build child
     this.childBuild,
@@ -31,6 +33,8 @@ class KeyboardEventWidget extends StatefulWidget {
     this.onKbHideBegin,
     this.onKbHiding,
     this.onKbHideEnd,
+    // sliding
+    this.onKbSliding,
     super.key
   });
 
@@ -46,6 +50,10 @@ class KeyboardEventWidgetState extends State<KeyboardEventWidget> with WidgetsBi
 
   bool isKbShowing = false;
 
+  bool isKbShowEnd = false;
+
+  final Duration checkEndDelay = const Duration(milliseconds: 200);
+
   @override
   Widget build(BuildContext context) {
     if (widget.child!=null) {
@@ -54,13 +62,13 @@ class KeyboardEventWidgetState extends State<KeyboardEventWidget> with WidgetsBi
     else if (widget.childBuild!=null) {
       return widget.childBuild!(bottomMargin);
     }
-    return SizedBox();
+    return const SizedBox();
   }
 
   @override
   void initState() {
     super.initState();
-    // debugPrint(">>> initState");
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -74,61 +82,91 @@ class KeyboardEventWidgetState extends State<KeyboardEventWidget> with WidgetsBi
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    double newBottomMargin = MediaQuery.of(context).viewInsets.bottom;
-    // show begin
-    if (newBottomMargin > 0 && bottomMargin == 0) {
-      // debugPrint(">>> show begin ${newInsetsBottom} ${insetsBottom}");
-      isKbHiding = false;
-      isKbShowing = true;
-      if (widget.onKbShowBegin!=null) {
-        widget.onKbShowBegin!(0);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      double newBottomMargin = MediaQuery.of(context).viewInsets.bottom;
+      // show begin
+      if (newBottomMargin > 0 && bottomMargin == 0) {
+        showBegin(newBottomMargin);
       }
-    }
-    // show end
-    else if (newBottomMargin == bottomMargin && bottomMargin>0 && isKbShowing) {
-      // debugPrint(">>> show end");
-      isKbHiding = false;
-      isKbShowing = false;
-      if (widget.onKbShowEnd!=null) {
-        widget.onKbShowEnd!(newBottomMargin);
+      // show end && bottomMargin>200
+      else if (newBottomMargin == bottomMargin && isKbShowing && isKbShowEnd) {
+        showEnd(newBottomMargin);
       }
-    }
-    // hide begin
-    else if (newBottomMargin == bottomMargin && bottomMargin>0 && !isKbHiding) {
-      // debugPrint(">>> hide begin");
-      isKbHiding = true;
-      isKbShowing = false;
-      if (widget.onKbHideBegin!=null) {
-        widget.onKbHideBegin!(newBottomMargin);
+      // hide begin // bottomMargin>270
+      else if (newBottomMargin < bottomMargin && !isKbHiding) {
+        hideBegin(newBottomMargin);
       }
-    }
-    // hide end
-    else if (newBottomMargin == 0 && bottomMargin > 0) {
-      // debugPrint(">>> hide end ${newInsetsBottom} ${insetsBottom}");
-      isKbHiding = false;
-      isKbShowing = false;
-      if (widget.onKbHideEnd!=null) {
-        widget.onKbHideEnd!(0);
+      // hide end
+      else if (newBottomMargin == 0 && bottomMargin > 0) {
+        hideEnd(newBottomMargin);
       }
-    }
-    // on showing
-    else if (isKbShowing) {
-      if (widget.onKbShowing!=null) {
-        widget.onKbShowing!(newBottomMargin);
+      // moving
+      if (isKbHiding && bottomMargin > newBottomMargin) {
+        if (widget.onKbSliding!=null) {
+          widget.onKbSliding!(newBottomMargin>20 ? newBottomMargin-20 : 0);
+        }
+        if (widget.onKbHiding!=null) {
+          widget.onKbHiding!(newBottomMargin>20 ? newBottomMargin-20 : 0);
+        }
       }
-    }
-    // on hiding
-    else if (isKbHiding) {
-      if (widget.onKbHiding!=null) {
-        widget.onKbHiding!(newBottomMargin);
+      else if (isKbShowing && bottomMargin < newBottomMargin) {
+        if (widget.onKbShowing!=null) {
+          widget.onKbShowing!(newBottomMargin);
+        }
+        if (widget.onKbSliding!=null) {
+          widget.onKbSliding!(newBottomMargin);
+        }
       }
+      bottomMargin = newBottomMargin;
+    });
+  }
+
+  void showBegin(double newBottomMargin) {
+    isKbShowing = true;
+    if (widget.onKbShowBegin!=null) {
+      widget.onKbShowBegin!(0);
     }
-    bottomMargin = newBottomMargin;
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    // if(mounted){
-    //   setState(() {
-    //   });
-    // }
-    // });
+    Future.delayed(checkEndDelay, (){
+        isKbShowEnd = true;
+        Future.delayed(const Duration(milliseconds: 100), (){
+          if (newBottomMargin == bottomMargin && isKbShowing && isKbShowEnd) {
+            showEnd(newBottomMargin);
+          }
+        });
+    });
+  }
+
+  void showEnd(double newBottomMargin) {
+    isKbShowing = false;
+    isKbShowEnd = false;
+    if (widget.onKbShowing!=null) {
+      widget.onKbShowing!(newBottomMargin);
+    }
+    if (widget.onKbSliding!=null) {
+      widget.onKbSliding!(newBottomMargin);
+    }
+    if (widget.onKbShowEnd!=null) {
+      widget.onKbShowEnd!(newBottomMargin);
+    }
+  }
+
+  void hideBegin(double newBottomMargin) {
+    isKbHiding = true;
+    if (widget.onKbHideBegin!=null) {
+      widget.onKbHideBegin!(newBottomMargin);
+    }
+  }
+
+  void hideEnd(double newBottomMargin) {
+    isKbHiding = false;
+    if (widget.onKbSliding!=null) {
+      widget.onKbSliding!(0);
+    }
+    if (widget.onKbHiding!=null) {
+      widget.onKbHiding!(0);
+    }
+    if (widget.onKbHideEnd!=null) {
+      widget.onKbHideEnd!(0);
+    }
   }
 }
