@@ -2,7 +2,9 @@ import 'package:flutter_editor_hub/editor_hub_widget.dart';
 
 class EditorHubController {
 
-  double bottomMargin = 0;
+  double keyBottomMargin = 0;
+
+  double optBottomMargin = 0;
 
   int bottomAnimatedMilliseconds = 0;
 
@@ -14,22 +16,36 @@ class EditorHubController {
     hubState = state;
   }
 
-  void slidingWithKb(double bm) {
-    hubState.setState(() {
-      bottomMargin = bm;
-    });
+  void switchOptboard() {
+    statusExcutor(
+      onOpHideKbHide:(){
+      },
+      onOpShowKbHide:(){
+      },
+      onOpHideKbShow:(){
+      }
+    );
   }
 
-  void switchOptboard() {
+  void statusExcutor({Function? onOpHideKbHide, Function? onOpShowKbHide, Function? onOpHideKbShow}) {
     // 导航栏在底部 -> 滑出导航栏，键盘不动
-    if (bottomMargin==0) {
-
+    if (optBottomMargin<=0) {
+      if (onOpHideKbHide!=null) {
+        onOpHideKbHide();
+      }
     }
     // 键盘弹出,导航栏在键盘上
-    else if (bottomMargin>0) {
-
+    else if (optBottomMargin>0 && keyBottomMargin>0) {
+      if (onOpShowKbHide!=null) {
+        onOpShowKbHide();
+      }
     }
     // 操作栏已显示(键盘未弹出,导航栏弹出)
+    else if (optBottomMargin>0 && keyBottomMargin<=0) {
+      if (onOpHideKbShow!=null) {
+        onOpHideKbShow();
+      }
+    }
   }
 
   void hideOptboard() {
