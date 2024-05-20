@@ -10,7 +10,7 @@ class EditorHubController {
 
   late EditorHubWidgetState hubState;
 
-  void initState(EditorHubWidgetState state) {
+  void initHubState(EditorHubWidgetState state) {
     hubState = state;
   }
 

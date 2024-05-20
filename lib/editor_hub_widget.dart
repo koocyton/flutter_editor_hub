@@ -65,7 +65,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   @override
   void initState() {
     super.initState();
-    widget.controller.initState(this);
+    widget.controller.initHubState(this);
   }
 
   @override
