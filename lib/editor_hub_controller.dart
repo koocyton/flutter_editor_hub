@@ -8,16 +8,28 @@ class EditorHubController {
 
   EditorHubController();
 
-  late EditorHubWidgetState state;
+  late EditorHubWidgetState hubState;
 
-  void setState(EditorHubWidgetState state) {
-    this.state = state;
+  void initState(EditorHubWidgetState state) {
+    hubState = state;
   }
 
-  void kbSliding(double bm) {
-    state.setState(() {
+  void slidingWithKb(double bm) {
+    hubState.setState(() {
       bottomMargin = bm;
     });
+  }
+
+  void switchOptboard() {
+    // 导航栏在底部 -> 滑出导航栏，键盘不动
+    if (bottomMargin==0) {
+
+    }
+    // 键盘弹出,导航栏在键盘上
+    else if (bottomMargin>0) {
+
+    }
+    // 操作栏已显示(键盘未弹出,导航栏弹出)
   }
 
   void hideOptboard() {
@@ -27,7 +39,7 @@ class EditorHubController {
     }
     // 键盘弹出,导航栏在键盘上
     // 操作栏已显示(键盘未弹出,导航栏弹出)
-    state.setState(() {
+    hubState.setState(() {
       bottomAnimatedMilliseconds = 200;
       bottomMargin = 0.00;
       Future.delayed(const Duration(milliseconds: 200), (){
@@ -44,7 +56,7 @@ class EditorHubController {
     }
     // 键盘弹出,导航栏在键盘上
     // 操作栏已显示(键盘未弹出,导航栏弹出)
-    state.setState(() {
+    hubState.setState(() {
       bottomAnimatedMilliseconds = 200;
       bottomMargin = 322.00;
       Future.delayed(const Duration(milliseconds: 200), (){

@@ -31,7 +31,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   Widget build(BuildContext context) {
     return KeyboardEventWidget(
       onKbSliding: (bm){
-        widget.controller.kbSliding(bm);
+        widget.controller.slidingWithKb(bm);
       },
       child:Column(
         children:[
@@ -65,7 +65,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   @override
   void initState() {
     super.initState();
-    widget.controller.setState(this);
+    widget.controller.initState(this);
   }
 
   @override
