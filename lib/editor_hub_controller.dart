@@ -28,6 +28,10 @@ class EditorHubController {
   }
 
   bool popScopeCanPop() {
+    // 面板 ━ 键盘 ━
+    if (panelBottomMargin<=0 && keyboradBottomMargin<=0) {
+      return true;
+    }
     return false;
   }
 
