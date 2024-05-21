@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.1
-  workmanager: ^0.5.2
   logger: ^2.0.2+1
 
 
