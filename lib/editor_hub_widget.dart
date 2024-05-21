@@ -67,7 +67,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
         height: widget.controller.panelBottomMargin,
         child: IndexedStack(
           alignment: Alignment.center,
-          index: 0,
+          index: widget.controller.panelIndex,
           children: widget.panelChildren.map((e){
             return SingleChildScrollView(
               child: e

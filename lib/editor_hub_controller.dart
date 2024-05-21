@@ -19,6 +19,9 @@ class EditorHubController {
   // panel 最大高度
   final double maxPanelBottomMargin = 300;
 
+  // panel index
+  int panelIndex = 0;
+
   EditorHubController();
 
   late EditorHubWidgetState hubState;
@@ -94,6 +97,12 @@ class EditorHubController {
   }
 
   void switchPanelBar(int idx) {
+    if (idx!=panelIndex) {
+      hubState.setState((){
+        panelIndex = idx;
+      });
+      return;
+    }
     statusDispatcher(
       // 面板 ━ 键盘 ━ -> 面板 ▤ 键盘 ━
       onPanelHideKbHide:(){
@@ -129,13 +138,13 @@ class EditorHubController {
       }
     }
     // 面板 ▤ 键盘 ━
-    else if (panelBottomMargin>0 && keyboradBottomMargin<=0) {
+    else if (keyboradBottomMargin<=0) { // && panelBottomMargin>0
       if (onPanelShowKbHide!=null) {
         onPanelShowKbHide();
       }
     }
     // 面板 ✕ 键盘 ▤
-    else if (panelBottomMargin>0 && keyboradBottomMargin>0) {
+    else { // if (panelBottomMargin>0 && keyboradBottomMargin>0) {
       if (onPanelHideKbShow!=null) {
         onPanelHideKbShow();
       }
