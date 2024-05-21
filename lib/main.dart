@@ -1,8 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_editor_hub/editor_demo_page.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:logger/logger.dart';
+import 'package:workmanager/workmanager.dart';
 
-void main() {
-  runApp(const MyApp());
+@pragma('vm:entry-point')
+void callbackDispatcher() {
+  final Logger logger = Logger();
+  Workmanager().executeTask((task, inputData) {
+    logger.t("Workmanager().executeTask <$task> : $inputData");
+    return Future.value(true);
+  });
+}
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  // _firebaseInit();
+  await Workmanager().initialize(callbackDispatcher);
+  await Workmanager().registerPeriodicTask(
+    "task-identifier",
+    "myTask",
+    initialDelay: const Duration(minutes: 1),
+    // constraints: Constraints (
+    //   requiresCharging: true,
+    //   networkType: NetworkType.connected,
+    // ),
+  );
+  // Wakelock.enable();
+  await Future.delayed(const Duration(milliseconds: 50), () {
+    initializeDateFormatting().then((_){
+      runApp(const MyApp());
+    });
+  });
+  SystemChrome.restoreSystemUIOverlays();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    // systemNavigationBarColor: Colors.green.shade100,
+    systemNavigationBarColor: Colors.black,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
+  ));
 }
 
 class MyApp extends StatelessWidget {
