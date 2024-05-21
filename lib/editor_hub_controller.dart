@@ -38,10 +38,12 @@ class EditorHubController {
     resetState();
   }
 
+  void keyboardSlideEnd(double bm) {
+    resetState();
+  }
+
   void keyboardShowing(double bm) {
-    if (disableFollowKeyboard) {
-    }
-    if (panelBottomMargin<bm) {
+    if (!disableFollowKeyboard && panelBottomMargin<bm) {
       hubState.setState((){
         bottomAnimatedMilliseconds = 0;
         panelBottomMargin = bm;
@@ -51,7 +53,7 @@ class EditorHubController {
   }
 
   void keyboardHiding(double bm) {
-    if (panelBottomMargin>bm) {
+    if (!disableFollowKeyboard && panelBottomMargin>bm) {
       hubState.setState((){
         bottomAnimatedMilliseconds = 200;
         panelBottomMargin = bm;

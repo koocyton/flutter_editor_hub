@@ -36,6 +36,12 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
       onKbShowing: (bm){
         widget.controller.keyboardShowing(bm);
       },
+      onKbHideEnd: (bm) {
+        widget.controller.resetState();
+      },
+      onKbShowEnd: (bm) {
+        widget.controller.resetState();
+      },
       child: Column(
         children:[
           Expanded(
