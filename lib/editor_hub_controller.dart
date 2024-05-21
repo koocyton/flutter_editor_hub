@@ -55,7 +55,7 @@ class EditorHubController {
   void keyboardHiding(double bm) {
     if (!disableFollowKeyboard && panelBottomMargin>bm) {
       hubState.setState((){
-        bottomAnimatedMilliseconds = 200;
+        bottomAnimatedMilliseconds = 0;
         panelBottomMargin = bm;
       });
     }
