@@ -10,13 +10,13 @@ class EditorHubWidget extends StatefulWidget {
 
   final Widget navbarChild;
 
-  final List<Widget> panelChilren;
+  final List<Widget> panelChildren;
 
   const EditorHubWidget({
     required this.controller,
     required this.editorChild,
     required this.navbarChild,
-    required this.panelChilren,
+    required this.panelChildren,
     super.key
   });
 
@@ -30,8 +30,11 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   @override
   Widget build(BuildContext context) {
     return KeyboardEventWidget(
-      onKbSliding: (bm){
-        widget.controller.slidingWithKb(bm);
+      onKbHiding: (bm){
+        widget.controller.onKeyboardHiding(bm);
+      },
+      onKbShowing: (bm){
+        widget.controller.onKeyboardShowing(bm);
       },
       child: Column(
         children:[
@@ -48,11 +51,11 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   Widget slidePanelBar() {
     return AnimatedContainer(
         duration: Duration(milliseconds: widget.controller.bottomAnimatedMilliseconds),
-        height: widget.controller.bottomMargin,
+        height: widget.controller.panelBottomMargin,
         child: IndexedStack(
           alignment: Alignment.center,
           index: 0,
-          children: widget.oprationChilren.map((e){
+          children: widget.panelChildren.map((e){
             return SingleChildScrollView(
               child: e
             );

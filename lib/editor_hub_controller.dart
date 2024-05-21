@@ -36,7 +36,7 @@ class EditorHubController {
     keyboradBottomMargin = bm;
   }
 
-  void switchPanelBar() {
+  void switchPanelBar(int idx) {
     statusDispatcher(
       onPanelHideKbHide:(){
       },

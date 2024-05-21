@@ -41,7 +41,7 @@ class EditorDemoPageState extends State<EditorDemoPage> {
             controller: ehController,
             editorChild: editor(),
             navbarChild: navbar(),
-            panelChilren: panels(),
+            panelChildren: panels(),
           )
         )
       ]
@@ -79,13 +79,17 @@ class EditorDemoPageState extends State<EditorDemoPage> {
       child: Row(
         children: [
           navbarItem(iconData: Icons.face, onPressed: (){
-            ehController.hideOptboard();
+            ehController.switchPanelBar(0);
           }),
           navbarItem(iconData: Icons.face, onPressed: (){
-            ehController.showOptboard(1);
-            }),
-          navbarItem(iconData: Icons.face, onPressed: (){}),
-          navbarItem(iconData: Icons.face, onPressed: (){})
+            ehController.switchPanelBar(1);
+          }),
+          navbarItem(iconData: Icons.face, onPressed: (){
+            ehController.switchPanelBar(2);
+          }),
+          navbarItem(iconData: Icons.face, onPressed: (){
+            ehController.switchPanelBar(3);
+          })
         ],
       )
     );
@@ -93,7 +97,10 @@ class EditorDemoPageState extends State<EditorDemoPage> {
 
   List<Widget> panels() {
     return [
-      Container()
+      Container(child:Text("a")),
+      Container(child:Text("a")),
+      Container(child:Text("a")),
+      Container(child:Text("a"))
     ];
   }
 
