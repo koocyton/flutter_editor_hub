@@ -40,7 +40,7 @@ class EditorHubController {
       // 面板 ▤ 键盘 ━ -> 面板 ━ 键盘 ━
       onPanelShowKbHide:(){
         hubState.setState((){
-          bottomAnimatedMilliseconds = 200;
+          bottomAnimatedMilliseconds = 130;
           disableFollowKeyboard = true;
           panelBottomMargin = 0;
         });
@@ -95,7 +95,7 @@ class EditorHubController {
       // 面板 ━ 键盘 ━ -> 面板 ▤ 键盘 ━
       onPanelHideKbHide:(){
         hubState.setState((){
-          bottomAnimatedMilliseconds = 200;
+          bottomAnimatedMilliseconds = 130;
           disableFollowKeyboard = true;
           panelBottomMargin = maxPanelBottomMargin;
         });
@@ -103,7 +103,7 @@ class EditorHubController {
       // 面板 ▤ 键盘 ━ -> 面板 ━ 键盘 ━
       onPanelShowKbHide:(){
         hubState.setState((){
-          bottomAnimatedMilliseconds = 200;
+          bottomAnimatedMilliseconds = 130;
           disableFollowKeyboard = true;
           panelBottomMargin = 0;
         });
