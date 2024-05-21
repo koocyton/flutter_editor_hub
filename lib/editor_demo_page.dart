@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
 import 'package:flutter_editor_hub/editor_hub_widget.dart';
