@@ -52,9 +52,10 @@ class EditorHubController {
       // 面板 ✕ 键盘 ▤ -> 面板 ▤ 键盘 ━
       onPanelHideKbShow:(){
         hubState.setState((){
-          disableFollowKeyboard = true;
+          bottomAnimatedMilliseconds = 0;
+          disableFollowKeyboard = false;
+          hideTextInput();
         });
-        hideTextInput();
       }
     );
   }
@@ -77,7 +78,6 @@ class EditorHubController {
   void keyboardShowing(double bm) {
     if (!disableFollowKeyboard && panelBottomMargin<bm) {
       hubState.setState((){
-        bottomAnimatedMilliseconds = 0;
         panelBottomMargin = bm;
       });
     }
@@ -87,7 +87,6 @@ class EditorHubController {
   void keyboardHiding(double bm) {
     if (!disableFollowKeyboard && panelBottomMargin>bm) {
       hubState.setState((){
-        bottomAnimatedMilliseconds = 0;
         panelBottomMargin = bm;
       });
     }
@@ -123,20 +122,20 @@ class EditorHubController {
   }
 
   void statusDispatcher({Function? onPanelHideKbHide, Function? onPanelShowKbHide, Function? onPanelHideKbShow}) {
-    // 导航栏在底部 -> 滑出导航栏，键盘不动
+    // 面板 ━ 键盘 ━
     if (panelBottomMargin<=0) {
       if (onPanelHideKbHide!=null) {
         onPanelHideKbHide();
       }
     }
-    // 键盘弹出,导航栏在键盘上
-    else if (panelBottomMargin>0 && keyboradBottomMargin>0) {
+    // 面板 ▤ 键盘 ━
+    else if (panelBottomMargin>0 && keyboradBottomMargin<=0) {
       if (onPanelShowKbHide!=null) {
         onPanelShowKbHide();
       }
     }
-    // 操作栏已显示(键盘未弹出,导航栏弹出)
-    else if (panelBottomMargin>0 && keyboradBottomMargin<=0) {
+    // 面板 ✕ 键盘 ▤
+    else if (panelBottomMargin>0 && keyboradBottomMargin>0) {
       if (onPanelHideKbShow!=null) {
         onPanelHideKbShow();
       }
