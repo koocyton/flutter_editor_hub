@@ -24,12 +24,13 @@ class EditorDemoPageState extends State<EditorDemoPage> {
     Size viewSize = MediaQueryData.fromView(View.of(context)).size;
     viewWidth  = viewSize.width;
     viewHeight = viewSize.height;
+    debugPrint("$viewWidth $viewHeight");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:[
         Container(
           color:Colors.black38,
-          height:45,
+          height: 45,
           width: viewWidth,
         ),
         Container(
