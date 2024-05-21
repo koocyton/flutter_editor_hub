@@ -90,8 +90,10 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
 
   @override
   void setState(Function fn) {
-    super.setState((){
-      fn();
-    });
+    if (mounted) {
+      super.setState((){
+        fn();
+      });
+    }
   }
 }

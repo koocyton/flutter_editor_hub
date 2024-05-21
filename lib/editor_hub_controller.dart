@@ -97,16 +97,11 @@ class EditorHubController {
   }
 
   void switchPanelBar(int idx) {
-    if (idx!=panelIndex) {
-      hubState.setState((){
-        panelIndex = idx;
-      });
-      return;
-    }
     statusDispatcher(
       // 面板 ━ 键盘 ━ -> 面板 ▤ 键盘 ━
       onPanelHideKbHide:(){
         hubState.setState((){
+          panelIndex = idx;
           bottomAnimatedMilliseconds = 130;
           disableFollowKeyboard = true;
           panelBottomMargin = maxPanelBottomMargin;
@@ -115,6 +110,10 @@ class EditorHubController {
       // 面板 ▤ 键盘 ━ -> 面板 ━ 键盘 ━
       onPanelShowKbHide:(){
         hubState.setState((){
+          if (idx!=panelIndex) {
+            panelIndex = idx;
+            return;
+          }
           bottomAnimatedMilliseconds = 130;
           disableFollowKeyboard = true;
           panelBottomMargin = 0;
@@ -123,6 +122,7 @@ class EditorHubController {
       // 面板 ✕ 键盘 ▤ -> 面板 ▤ 键盘 ━
       onPanelHideKbShow:(){
         hubState.setState((){
+          panelIndex = idx;
           disableFollowKeyboard = true;
         });
         hideTextInput();
