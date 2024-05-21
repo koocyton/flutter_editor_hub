@@ -41,7 +41,7 @@ class EditorDemoPageState extends State<EditorDemoPage> {
             controller: ehController,
             editorChild: editor(),
             navbarChild: navbar(),
-            oprationChilren: opreations(),
+            panelChilren: panels(),
           )
         )
       ]
@@ -91,7 +91,7 @@ class EditorDemoPageState extends State<EditorDemoPage> {
     );
   }
 
-  List<Widget> opreations() {
+  List<Widget> panels() {
     return [
       Container()
     ];

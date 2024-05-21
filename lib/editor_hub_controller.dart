@@ -16,7 +16,7 @@ class EditorHubController {
     hubState = state;
   }
 
-  void switchOptboard() {
+  void switchPanelBar() {
     statusExcutor(
       onOpHideKbHide:(){
       },
