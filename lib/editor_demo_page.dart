@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
 import 'package:flutter_editor_hub/editor_hub_widget.dart';
 
@@ -112,12 +111,12 @@ class EditorDemoPageState extends State<EditorDemoPage> {
       child: ElevatedButton(
         style: ButtonStyle(
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          minimumSize: MaterialStateProperty.all(Size.zero),
-          elevation: MaterialStateProperty.all(0),
-          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          shadowColor: MaterialStateProperty.all(Colors.transparent),
-          padding: MaterialStateProperty.all(EdgeInsets.zero),
-          shape: MaterialStateProperty.all(
+          minimumSize: WidgetStateProperty.all(Size.zero),
+          elevation: WidgetStateProperty.all(0),
+          backgroundColor: WidgetStateProperty.all(Colors.transparent),
+          shadowColor: WidgetStateProperty.all(Colors.transparent),
+          padding: WidgetStateProperty.all(EdgeInsets.zero),
+          shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(1),
             )
