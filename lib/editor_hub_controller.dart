@@ -28,10 +28,31 @@ class EditorHubController {
   }
 
   bool popScopeCanPop() {
-    return true;
+    return false;
   }
 
   void popScopePopInvoked(bool didPop) {
+    statusDispatcher(
+      // 面板 ━ 键盘 ━ -> 面板 ▤ 键盘 ━
+      onPanelHideKbHide:(){
+        return;
+      },
+      // 面板 ▤ 键盘 ━ -> 面板 ━ 键盘 ━
+      onPanelShowKbHide:(){
+        hubState.setState((){
+          bottomAnimatedMilliseconds = 200;
+          disableFollowKeyboard = true;
+          panelBottomMargin = 0;
+        });
+      },
+      // 面板 ✕ 键盘 ▤ -> 面板 ▤ 键盘 ━
+      onPanelHideKbShow:(){
+        hubState.setState((){
+          disableFollowKeyboard = true;
+        });
+        hideTextInput();
+      }
+    );
   }
 
   void resetState() {
