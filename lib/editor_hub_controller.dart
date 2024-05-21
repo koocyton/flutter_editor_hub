@@ -6,7 +6,11 @@ class EditorHubController {
 
   double panelBottomMargin = 0;
 
+  bool disableKeyboard = false;
+
   int bottomAnimatedMilliseconds = 0;
+
+  final double maxPanelBottomMargin = 300;
 
   EditorHubController();
 
@@ -16,7 +20,7 @@ class EditorHubController {
     hubState = state;
   }
 
-  void onKeyboardShowing(double bm) {
+  void keyboardShowing(double bm) {
     if (panelBottomMargin<bm) {
       hubState.setState((){
         bottomAnimatedMilliseconds = 0;
@@ -26,10 +30,10 @@ class EditorHubController {
     keyboradBottomMargin = bm;
   }
 
-  void onKeyboardHiding(double bm) {
+  void keyboardHiding(double bm) {
     if (panelBottomMargin>bm) {
       hubState.setState((){
-        bottomAnimatedMilliseconds = 0;
+        bottomAnimatedMilliseconds = 200;
         panelBottomMargin = bm;
       });
     }
@@ -39,6 +43,11 @@ class EditorHubController {
   void switchPanelBar(int idx) {
     statusDispatcher(
       onPanelHideKbHide:(){
+        hubState.setState((){
+          bottomAnimatedMilliseconds = 200;
+          disableKeyboard = true;
+          panelBottomMargin = maxPanelBottomMargin;
+        });
       },
       onPanelShowKbHide:(){
       },

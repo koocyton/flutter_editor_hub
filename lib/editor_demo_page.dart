@@ -96,11 +96,11 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   }
 
   List<Widget> panels() {
-    return [
-      Container(child:Text("a")),
-      Container(child:Text("a")),
-      Container(child:Text("a")),
-      Container(child:Text("a"))
+    return const [
+      SizedBox(child: Text("0")),
+      SizedBox(child: Text("1")),
+      SizedBox(child: Text("2")),
+      SizedBox(child: Text("3"))
     ];
   }
 

@@ -31,10 +31,10 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   Widget build(BuildContext context) {
     return KeyboardEventWidget(
       onKbHiding: (bm){
-        widget.controller.onKeyboardHiding(bm);
+        widget.controller.keyboardHiding(bm);
       },
       onKbShowing: (bm){
-        widget.controller.onKeyboardShowing(bm);
+        widget.controller.keyboardShowing(bm);
       },
       child: Column(
         children:[
