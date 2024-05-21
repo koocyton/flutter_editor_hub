@@ -29,27 +29,31 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return KeyboardEventWidget(
-      onKbHiding: (bm){
-        widget.controller.keyboardHiding(bm);
-      },
-      onKbShowing: (bm){
-        widget.controller.keyboardShowing(bm);
-      },
-      onKbHideEnd: (bm) {
-        widget.controller.resetState();
-      },
-      onKbShowEnd: (bm) {
-        widget.controller.resetState();
-      },
-      child: Column(
-        children:[
-          Expanded(
-            child: widget.editorChild
-          ),
-          widget.navbarChild,
-          slidePanelBar()
-        ]
+    return PopScope(
+      canPop: widget.controller.popScopeCanPop(),
+      onPopInvoked: widget.controller.popScopePopInvoked,
+      child: KeyboardEventWidget(
+        onKbHiding: (bm){
+          widget.controller.keyboardHiding(bm);
+        },
+        onKbShowing: (bm){
+          widget.controller.keyboardShowing(bm);
+        },
+        onKbHideEnd: (bm) {
+          widget.controller.resetState();
+        },
+        onKbShowEnd: (bm) {
+          widget.controller.resetState();
+        },
+        child: Column(
+          children:[
+            Expanded(
+              child: widget.editorChild
+            ),
+            widget.navbarChild,
+            slidePanelBar()
+          ]
+        )
       )
     );
   }

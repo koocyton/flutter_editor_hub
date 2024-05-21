@@ -27,6 +27,13 @@ class EditorHubController {
     hubState = state;
   }
 
+  bool popScopeCanPop() {
+    return true;
+  }
+
+  void popScopePopInvoked(bool didPop) {
+  }
+
   void resetState() {
     hubState.setState((){
       disableFollowKeyboard = false;
