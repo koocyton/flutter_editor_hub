@@ -57,13 +57,13 @@ class EditorDemoPageState extends State<EditorDemoPage> {
           navbarItem(
             iconData: Icons.edit, 
             onPressed: (){
-              SystemChannels.textInput.invokeMethod<void>('TextInput.show');
+              EditorHubController.showTextInput();
             }
           ),
           navbarItem(
             iconData: Icons.edit_off, 
             onPressed: (){
-              SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
+              EditorHubController.hideTextInput();
             }
           )
         ]

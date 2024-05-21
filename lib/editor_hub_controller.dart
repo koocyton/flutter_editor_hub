@@ -1,15 +1,22 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_editor_hub/editor_hub_widget.dart';
 
 class EditorHubController {
 
+  // 键盘的高度
   double keyboradBottomMargin = 0;
 
+  // 操作面板的高度
   double panelBottomMargin = 0;
 
-  bool disableKeyboard = false;
+  // 禁止 panel 跟随 键盘滑入滑出
+  bool disableFollowKeyboard = false;
 
+  // disableKeyboard = false 时，panel 滑入滑出动画时长 0
+  // disableKeyboard = true 时，panel 滑入滑出动画时长 200
   int bottomAnimatedMilliseconds = 0;
 
+  // panel 最大高度
   final double maxPanelBottomMargin = 300;
 
   EditorHubController();
@@ -20,7 +27,20 @@ class EditorHubController {
     hubState = state;
   }
 
+  void resetState() {
+    hubState.setState((){
+      disableFollowKeyboard = false;
+      bottomAnimatedMilliseconds = 0;
+    });
+  }
+
+  void panelSlideEnd() {
+    resetState();
+  }
+
   void keyboardShowing(double bm) {
+    if (disableFollowKeyboard) {
+    }
     if (panelBottomMargin<bm) {
       hubState.setState((){
         bottomAnimatedMilliseconds = 0;
@@ -42,16 +62,28 @@ class EditorHubController {
 
   void switchPanelBar(int idx) {
     statusDispatcher(
+      // 面板 ━ 键盘 ━ -> 面板 ▤ 键盘 ━
       onPanelHideKbHide:(){
         hubState.setState((){
           bottomAnimatedMilliseconds = 200;
-          disableKeyboard = true;
+          disableFollowKeyboard = true;
           panelBottomMargin = maxPanelBottomMargin;
         });
       },
+      // 面板 ▤ 键盘 ━ -> 面板 ━ 键盘 ━
       onPanelShowKbHide:(){
+        hubState.setState((){
+          bottomAnimatedMilliseconds = 200;
+          disableFollowKeyboard = true;
+          panelBottomMargin = 0;
+        });
       },
+      // 面板 ✕ 键盘 ▤ -> 面板 ▤ 键盘 ━
       onPanelHideKbShow:(){
+        hubState.setState((){
+          disableFollowKeyboard = true;
+        });
+        hideTextInput();
       }
     );
   }
@@ -75,5 +107,13 @@ class EditorHubController {
         onPanelHideKbShow();
       }
     }
+  }
+
+  static void showTextInput() {
+    SystemChannels.textInput.invokeMethod<void>('TextInput.show');
+  }
+
+  static void hideTextInput() {
+    SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
   }
 }
