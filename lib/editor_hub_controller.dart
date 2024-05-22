@@ -10,7 +10,7 @@ class EditorHubController {
   double panelBottomMargin = 0;
 
   // 禁止 panel 跟随 键盘滑入滑出
-  bool isFollowKeyboard = true;
+  bool isPanelFollowKeyboard = true;
 
   // disableKeyboard = false 时，panel 滑入滑出动画时长 0
   // disableKeyboard = true 时，panel 滑入滑出动画时长 200
@@ -56,7 +56,7 @@ class EditorHubController {
       onPanelShowKbHide:(){
         hubState.setState((){
           bottomAnimatedMilliseconds = 130;
-          isFollowKeyboard = false;
+          isPanelFollowKeyboard = false;
           panelBottomMargin = 0;
         });
       },
@@ -64,7 +64,7 @@ class EditorHubController {
       onPanelHideKbShow:(){
         hubState.setState((){
           bottomAnimatedMilliseconds = 0;
-          isFollowKeyboard = true;
+          isPanelFollowKeyboard = true;
           hideTextInput();
         });
       }
@@ -73,7 +73,7 @@ class EditorHubController {
 
   void resetState() {
     hubState.setState((){
-      isFollowKeyboard = true;
+      isPanelFollowKeyboard = true;
       bottomAnimatedMilliseconds = 0;
     });
   }
@@ -87,7 +87,7 @@ class EditorHubController {
   }
 
   void keyboardShowing(double bm) {
-    if (isFollowKeyboard && panelBottomMargin<bm) {
+    if (isPanelFollowKeyboard && panelBottomMargin<bm) {
       hubState.setState((){
         panelBottomMargin = bm;
       });
@@ -96,7 +96,7 @@ class EditorHubController {
   }
 
   void keyboardHiding(double bm) {
-    if (isFollowKeyboard && panelBottomMargin>bm) {
+    if (isPanelFollowKeyboard && panelBottomMargin>bm) {
       hubState.setState((){
         panelBottomMargin = bm;
       });
@@ -111,7 +111,7 @@ class EditorHubController {
         hubState.setState((){
           panelIndex = idx;
           bottomAnimatedMilliseconds = 130;
-          isFollowKeyboard = false;
+          isPanelFollowKeyboard = false;
           panelBottomMargin = maxPanelBottomMargin;
           anchoredState = 0;
         });
@@ -127,13 +127,13 @@ class EditorHubController {
           // 上一次状态是 面板 ━ 键盘 ━
           if (anchoredState==0) {
             bottomAnimatedMilliseconds = 130;
-            isFollowKeyboard = false;
+            isPanelFollowKeyboard = false;
             panelBottomMargin = 0;
           }
           // 上一次状态是 面板 ✕ 键盘 ▤
           else {
             panelIndex = idx;
-            isFollowKeyboard = false;
+            isPanelFollowKeyboard = false;
             anchoredState = -1;
             showTextInput();
           }
@@ -143,7 +143,7 @@ class EditorHubController {
       onPanelHideKbShow:(){
         hubState.setState((){
           panelIndex = idx;
-          isFollowKeyboard = false;
+          isPanelFollowKeyboard = false;
           anchoredState = 2;
         });
         hideTextInput();
