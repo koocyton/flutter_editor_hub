@@ -61,7 +61,9 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   Widget slidePanelBar() {
     return AnimatedContainer(
         onEnd: (){
-          widget.controller.panelSlideEnd();
+          Future.delayed(const Duration(milliseconds: 50), () {
+            widget.controller.panelSlideEnd();
+          });
         },
         duration: Duration(milliseconds: widget.controller.bottomAnimatedMilliseconds),
         height: widget.controller.panelBottomMargin,
