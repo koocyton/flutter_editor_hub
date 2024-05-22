@@ -135,7 +135,7 @@ class EditorHubController {
             panelIndex = idx;
             disableFollowKeyboard = true;
             anchoredState = -1;
-            hideTextInput();
+            showTextInput();
           }
         });
       },
