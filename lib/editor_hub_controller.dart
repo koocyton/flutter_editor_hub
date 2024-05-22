@@ -22,6 +22,14 @@ class EditorHubController {
   // panel index
   int panelIndex = 0;
 
+  // 记录锚定的状态 (面板 ▤ 键盘 ━ 前一个状态)
+  // 前一个是 面板 ━ 键盘 ━  0，操作 switchPanelBar -> 面板 ━ 键盘 ━
+  // 前一个是 面板 ✕ 键盘 ▤ ，操作 switchPanelBar -> 面板 ✕ 键盘 ▤
+  // 0 -> 面板 ━ 键盘 ━ 
+  // 1 -> 面板 ▤ 键盘 ━ 
+  // 2 -> 面板 ✕ 键盘 ▤ 
+  int anchoredState = 0;
+
   EditorHubController();
 
   late EditorHubWidgetState hubState;
@@ -105,18 +113,30 @@ class EditorHubController {
           bottomAnimatedMilliseconds = 130;
           disableFollowKeyboard = true;
           panelBottomMargin = maxPanelBottomMargin;
+          anchoredState = 0;
         });
       },
       // 面板 ▤ 键盘 ━ -> 面板 ━ 键盘 ━
       onPanelShowKbHide:(){
         hubState.setState((){
+          // panel 切换
           if (idx!=panelIndex) {
             panelIndex = idx;
             return;
           }
-          bottomAnimatedMilliseconds = 130;
-          disableFollowKeyboard = true;
-          panelBottomMargin = 0;
+          // 上一次状态是 面板 ━ 键盘 ━
+          if (anchoredState==0) {
+            bottomAnimatedMilliseconds = 130;
+            disableFollowKeyboard = true;
+            panelBottomMargin = 0;
+          }
+          // 上一次状态是 面板 ✕ 键盘 ▤
+          else {
+            panelIndex = idx;
+            disableFollowKeyboard = true;
+            anchoredState = -1;
+            hideTextInput();
+          }
         });
       },
       // 面板 ✕ 键盘 ▤ -> 面板 ▤ 键盘 ━
@@ -124,6 +144,7 @@ class EditorHubController {
         hubState.setState((){
           panelIndex = idx;
           disableFollowKeyboard = true;
+          anchoredState = 2;
         });
         hideTextInput();
       }
