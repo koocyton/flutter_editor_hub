@@ -57,6 +57,7 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   Widget editor() {
     return AppFlowyEditor(
       editorState: editorState,
+      editorStyle: const EditorStyle.mobile(padding: EdgeInsets.all(10)),
     );
     // return Container(
     //   width: viewWidth/2,
