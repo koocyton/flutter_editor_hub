@@ -1,6 +1,8 @@
+import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
 import 'package:flutter_editor_hub/editor_hub_widget.dart';
+
 
 class EditorDemoPage extends StatefulWidget {
 
@@ -14,6 +16,10 @@ class EditorDemoPage extends StatefulWidget {
 }
 
 class EditorDemoPageState extends State<EditorDemoPage> {
+
+  final editorState = EditorState(
+    document: markdownToDocument(r'''# Hello AppFlowy!'''),
+  );
 
   final EditorHubController ehController = EditorHubController();
   late double viewWidth;
@@ -49,26 +55,29 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   }
 
   Widget editor() {
-    return Container(
-      width: viewWidth/2,
-      alignment: Alignment.center,
-      child: Row(
-        children:[
-          navbarItem(
-            iconData: Icons.edit, 
-            onPressed: (){
-              EditorHubController.showTextInput();
-            }
-          ),
-          navbarItem(
-            iconData: Icons.edit_off, 
-            onPressed: (){
-              EditorHubController.hideTextInput();
-            }
-          )
-        ]
-      )
+    return AppFlowyEditor(
+      editorState: editorState,
     );
+    // return Container(
+    //   width: viewWidth/2,
+    //   alignment: Alignment.center,
+    //   child: Row(
+    //     children:[
+    //       navbarItem(
+    //         iconData: Icons.edit, 
+    //         onPressed: (){
+    //           EditorHubController.showTextInput();
+    //         }
+    //       ),
+    //       navbarItem(
+    //         iconData: Icons.edit_off, 
+    //         onPressed: (){
+    //           EditorHubController.hideTextInput();
+    //         }
+    //       )
+    //     ]
+    //   )
+    // );
   }
 
   Widget navbar() {
