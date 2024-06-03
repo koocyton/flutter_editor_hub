@@ -1,7 +1,7 @@
-import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
 import 'package:flutter_editor_hub/editor_hub_widget.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 
 class EditorDemoPage extends StatefulWidget {
@@ -17,9 +17,7 @@ class EditorDemoPage extends StatefulWidget {
 
 class EditorDemoPageState extends State<EditorDemoPage> {
 
-  final editorState = EditorState(
-    document: markdownToDocument(r'''# Hello AppFlowy!'''),
-  );
+  QuillController _controller = QuillController.basic();
 
   final EditorHubController ehController = EditorHubController();
   late double viewWidth;
@@ -55,9 +53,13 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   }
 
   Widget editor() {
-    return AppFlowyEditor(
-      editorState: editorState,
-      editorStyle: const EditorStyle.mobile(padding: EdgeInsets.all(10)),
+    return QuillEditor.basic(
+      configurations: QuillEditorConfigurations(
+        controller: _controller,
+        sharedConfigurations: const QuillSharedConfigurations(
+          locale: Locale('de'),
+        ),
+      ),
     );
     // return Container(
     //   width: viewWidth/2,
@@ -106,11 +108,18 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   }
 
   List<Widget> panels() {
-    return const [
-      SizedBox(child: Text("0")),
-      SizedBox(child: Text("1")),
-      SizedBox(child: Text("2")),
-      SizedBox(child: Text("3"))
+    return [
+      QuillToolbar .simple(
+        configurations: QuillSimpleToolbarConfigurations(
+          controller: _controller,
+          sharedConfigurations: const QuillSharedConfigurations(
+            locale: Locale('de'),
+          ),
+        ),
+      ),
+      const SizedBox(child: Text("1")),
+      const SizedBox(child: Text("2")),
+      const SizedBox(child: Text("3"))
     ];
   }
 
