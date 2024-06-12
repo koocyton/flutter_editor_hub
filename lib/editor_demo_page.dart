@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
 import 'package:flutter_editor_hub/editor_hub_widget.dart';
+import 'package:flutter_editor_hub/scroll_util.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/markdown_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
@@ -59,6 +60,33 @@ class EditorDemoPageState extends State<EditorDemoPage> {
     return QuillEditor.basic(
       configurations: QuillEditorConfigurations(
         controller: _controller,
+        scrollPhysics: const FastBouncingScrollPhysics(),
+        customStyles: const DefaultStyles(
+          paragraph: DefaultTextBlockStyle(
+            TextStyle(
+              color: Colors.black,
+              fontWeight:
+              FontWeight.w900,
+              fontSize: 35
+            ),
+            VerticalSpacing(16, 0),
+            VerticalSpacing(0, 0),
+            null
+          ),
+        ),
+
+        onImagePaste: (u){
+          return Future.value("");
+        },
+        scrollable: true,
+        autoFocus: false,
+        expands: true,
+        padding: const EdgeInsets.all(20),
+        placeholder: "",
+        editorKey: GlobalKey<EditorState>(),
+        showCursor: true,
+        floatingCursorDisabled: false,
+        paintCursorAboveText: true,
         sharedConfigurations: const QuillSharedConfigurations(
           locale: Locale('de'),
         ),
@@ -154,18 +182,7 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   @override
   void initState() {
     super.initState();
-    final mdStr = '''
----
-title: Flutter 开发编辑器的控制台处理
-date: 2024-05-28
-author: koocyton
-catalog: keyboard pop
-tags:
-- flutter
-- app
-- rich text editor
-header-img: /img/larsonist.jpg
----
+    final mdStr = '''# 你好
 
 ## 前言
 
