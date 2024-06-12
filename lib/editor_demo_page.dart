@@ -65,9 +65,8 @@ class EditorDemoPageState extends State<EditorDemoPage> {
           paragraph: DefaultTextBlockStyle(
             TextStyle(
               color: Colors.black,
-              fontWeight:
-              FontWeight.w900,
-              fontSize: 35
+              fontWeight: FontWeight.normal,
+              fontSize: 16
             ),
             VerticalSpacing(16, 0),
             VerticalSpacing(0, 0),
