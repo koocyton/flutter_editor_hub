@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
 import 'package:flutter_editor_hub/editor_hub_widget.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/markdown_quill.dart';
+import 'package:flutter_quill/quill_delta.dart';
+import 'package:markdown/markdown.dart' as md;
 
 
 class EditorDemoPage extends StatefulWidget {
@@ -146,5 +149,15 @@ class EditorDemoPageState extends State<EditorDemoPage> {
         child: Icon(iconData, color: Colors.black54, size: 30)
       )
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    final markdown = html2md.convert(html,).replaceAll('unsafe:', '');
+    final mdDocument = md.Document(encodeHtml: false);
+    final mdToDelta = MarkdownToDelta(markdownDocument: mdDocument);
+    _controller.document = Document.fromDelta(mdToDelta.convert(""));
   }
 }
