@@ -155,9 +155,9 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   void initState() {
     super.initState();
 
-    final markdown = html2md.convert(html,).replaceAll('unsafe:', '');
+    // final markdown = html2md.convert(html,).replaceAll('unsafe:', '');
     final mdDocument = md.Document(encodeHtml: false);
     final mdToDelta = MarkdownToDelta(markdownDocument: mdDocument);
-    _controller.document = Document.fromDelta(mdToDelta.convert(""));
+    _controller.document = Document.fromDelta(mdToDelta.convert("*** abc"));
   }
 }
