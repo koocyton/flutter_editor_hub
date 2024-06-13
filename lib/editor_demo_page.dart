@@ -181,9 +181,47 @@ class EditorDemoPageState extends State<EditorDemoPage> {
   @override
   void initState() {
     super.initState();
-    String mdStr = "<h1>Line3</h1>";
-    final mdDocument = md.Document(encodeHtml: false);
-    final mdToDelta = MarkdownToDelta(markdownDocument: mdDocument);
+    String mdStr = '''
+Hi, this is a test of markdown_quill.
+
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+
+# H1
+ok
+# H2
+# H3
+done
+# H4
+''';
+
+    // Configure the markdown parser
+    final mdDocument = md.Document(
+      encodeHtml: false,
+      extensionSet: md.ExtensionSet.gitHubFlavored,
+
+      // you can add custom syntax.
+      blockSyntaxes: [const EmbeddableTableSyntax()],
+    );
+
+    final mdToDelta = MarkdownToDelta(
+      markdownDocument: mdDocument,
+
+      // you can add custom attributes based on tags
+      customElementToBlockAttribute: {
+        'h4': (element) => [HeaderAttribute(level: 4)],
+      },
+      // custom embed
+      customElementToEmbeddable: {
+        EmbeddableTable.tableType: EmbeddableTable.fromMdSyntax,
+      },
+    );
+
+
+    // final mdDocument = md.Document(encodeHtml: false);
+    // final mdToDelta = MarkdownToDelta(markdownDocument: mdDocument);
     _controller.document = Document.fromDelta(mdToDelta.convert(mdStr));
   }
 }
