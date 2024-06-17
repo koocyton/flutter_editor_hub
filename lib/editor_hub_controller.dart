@@ -104,6 +104,10 @@ class EditorHubController {
     keyboradBottomMargin = bm;
   }
 
+  void keyboardSliding(double bm) {
+    keyboradBottomMargin = bm;
+  }
+
   void switchPanelBar(int idx) {
     statusDispatcher(
       // 面板 ━ 键盘 ━ -> 面板 ▤ 键盘 ━

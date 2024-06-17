@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class KeyboardEventWidget extends StatefulWidget {
+class EditorEventWidget extends StatefulWidget {
 
   final Widget Function(double bottomMargin)? childBuild;
 
@@ -21,7 +21,7 @@ class KeyboardEventWidget extends StatefulWidget {
 
   final Function(double bottomMargin)? onKbSliding;
 
-  const KeyboardEventWidget({
+  const EditorEventWidget({
     // build child
     this.childBuild,
     this.child,
@@ -39,10 +39,10 @@ class KeyboardEventWidget extends StatefulWidget {
   });
 
   @override
-  State<KeyboardEventWidget> createState() => KeyboardEventWidgetState();
+  State<EditorEventWidget> createState() => EditorEventWidgetState();
 }
 
-class KeyboardEventWidgetState extends State<KeyboardEventWidget> with WidgetsBindingObserver {
+class EditorEventWidgetState extends State<EditorEventWidget> with WidgetsBindingObserver {
 
   double bottomMargin = 0;
 
@@ -101,7 +101,7 @@ class KeyboardEventWidgetState extends State<KeyboardEventWidget> with WidgetsBi
         hideEnd(newBottomMargin);
       }
       // moving
-      if (isKbHiding && bottomMargin > newBottomMargin) {
+      else if (isKbHiding && bottomMargin > newBottomMargin) {
         if (widget.onKbSliding!=null) {
           widget.onKbSliding!(newBottomMargin>20 ? newBottomMargin-20 : 0);
         }
@@ -113,6 +113,11 @@ class KeyboardEventWidgetState extends State<KeyboardEventWidget> with WidgetsBi
         if (widget.onKbShowing!=null) {
           widget.onKbShowing!(newBottomMargin);
         }
+        if (widget.onKbSliding!=null) {
+          widget.onKbSliding!(newBottomMargin);
+        }
+      }
+      else {
         if (widget.onKbSliding!=null) {
           widget.onKbSliding!(newBottomMargin);
         }

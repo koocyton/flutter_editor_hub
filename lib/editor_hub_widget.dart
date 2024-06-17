@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_editor_hub/editor_hub_controller.dart';
-import 'package:flutter_editor_hub/keyboard_event_widget.dart';
+import 'package:flutter_editor_hub/editor_event_widget.dart';
 
 class EditorHubWidget extends StatefulWidget {
 
@@ -32,7 +32,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
     return PopScope(
       canPop: widget.controller.popScopeCanPop(),
       onPopInvoked: widget.controller.popScopePopInvoked,
-      child: KeyboardEventWidget(
+      child: EditorEventWidget(
         onKbHiding: (bm){
           widget.controller.keyboardHiding(bm);
         },
