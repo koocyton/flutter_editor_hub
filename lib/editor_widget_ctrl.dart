@@ -30,7 +30,7 @@ class EditorWidgetCtrl {
   // 2 -> 面板 ✕ 键盘 ▤ 
   int anchoredState = 0;
 
-  EditorHubController();
+  // EditorHubController();
 
   late EditorHubWidgetState hubState;
 

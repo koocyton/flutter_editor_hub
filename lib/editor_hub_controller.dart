@@ -46,7 +46,7 @@ class EditorHubController {
     return false;
   }
 
-  void popScopePopInvoked(bool didPop) {
+  void popScopePopInvoked(bool didPop, dynamic object) {
     statusDispatcher(
       // 面板 ━ 键盘 ━ -> 面板 ▤ 键盘 ━
       onPanelHideKbHide:(){

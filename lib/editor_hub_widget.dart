@@ -31,7 +31,7 @@ class EditorHubWidgetState extends State<EditorHubWidget> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: widget.controller.popScopeCanPop(),
-      onPopInvoked: widget.controller.popScopePopInvoked,
+      onPopInvokedWithResult: widget.controller.popScopePopInvoked,
       child: EditorEventWidget(
         onKbHiding: (bm){
           widget.controller.keyboardHiding(bm);

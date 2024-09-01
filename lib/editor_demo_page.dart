@@ -109,7 +109,7 @@ class EditorDemoPageState extends State<EditorDemoPage> {
 
   List<Widget> panels() {
     return [
-      QuillToolbar .simple(
+      QuillToolbar.simple(
         configurations: QuillSimpleToolbarConfigurations(
           controller: _controller,
           sharedConfigurations: const QuillSharedConfigurations(
